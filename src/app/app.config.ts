@@ -62,7 +62,7 @@ export const appConfig: ApplicationConfig = {
      *
      * @see {@link routes}
      */
-    provideRouter(routes, withHashLocation()),
+    provideRouter(routes),
 
     provideHttpClient(),
   ]
