@@ -1,0 +1,55 @@
+name: Deploy Dev to SiteGround
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 📥 Clona el repositorio en la máquina del runner
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 🟢 Instala Node.js y activa cache para pnpm
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24        # versión de Node
+
+      # 📦 Instala angular globalmente
+      - name: Instalar angular
+        run: npm install -g @angular/cli
+
+      # 📥 Instala dependencias del proyecto
+      - name: Instalar dependencias
+        run: npm install
+        # evita inconsistencias entre devs y CI
+
+      # 🏗️ Build del proyecto Angular
+      - name: Build Angular
+        run: npm run build
+        # 🔥 ESTE es el paso crítico:
+        # si falla → el PR queda bloqueado
+
+      - name: Deploy to SiteGround using rsync
+        run: |
+          echo "$SITEGROUND_SSH_KEY" > private_key
+          chmod 600 private_key
+          
+          rsync -avz --delete --dry-run \
+          -e "ssh -i private_key -o StrictHostKeyChecking=no -p $SITEGROUND_PORT"  \
+          dist/CV-Project/browser $SITEGROUND_USER@$SITEGROUND_HOST:$SITEGROUND_PATH
+
+        env:
+          SITEGROUND_SSH_KEY: ${{ secrets.SITEGROUND_SSH_KEY }}
+          SITEGROUND_HOST: ${{ secrets.SITEGROUND_HOST }}
+          SITEGROUND_USER: ${{ secrets.SITEGROUND_USER }}
+          SITEGROUND_PORT: ${{ secrets.SITEGROUND_PORT }}
+          SITEGROUND_PATH: ${{ secrets.SITEGROUND_DEV_PATH }}
