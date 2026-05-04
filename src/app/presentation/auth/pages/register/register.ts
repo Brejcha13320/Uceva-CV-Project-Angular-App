@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -19,7 +19,7 @@ import { RegisterValidators } from '../../../../shared/utils/validators/register
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
-export class Register {
+export class Register implements OnInit {
 
   registerForm!: FormGroup;
 

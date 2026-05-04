@@ -14,8 +14,7 @@ import { CommonModule } from '@angular/common';
     (click)="onEmit()">
       {{ text }}
     </button>
-  `,
-  styleUrl: './button.scss',
+  `
 })
 export class Button {
 
