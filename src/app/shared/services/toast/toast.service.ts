@@ -1,10 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-
-export interface Toast {
-  text: string;
-  classname?: string;
-  delay?: number;
-}
+import { Toast } from '../../../interfaces/toast.interface';
 
 @Injectable({
   providedIn: 'root',
