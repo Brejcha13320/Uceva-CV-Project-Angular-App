@@ -45,7 +45,7 @@ jobs:
           
           rsync -avz --delete \
           -e "ssh -i private_key -o StrictHostKeyChecking=no -p $SITEGROUND_PORT"  \
-          dist/CV-Project/browser $SITEGROUND_USER@$SITEGROUND_HOST:$SITEGROUND_PATH
+          dist/CV-Project/browser/ $SITEGROUND_USER@$SITEGROUND_HOST:$SITEGROUND_PATH
 
         env:
           SITEGROUND_SSH_KEY: ${{ secrets.SITEGROUND_SSH_KEY }}
