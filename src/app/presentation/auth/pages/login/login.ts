@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -13,9 +13,9 @@ import { FormHelper } from '../../../../shared/utils/helpers/form-helper';
 @Component({
   selector: 'app-login',
   imports: [
-    CommonModule,
     Button,
     FormsModule,
+    CommonModule,
     ReactiveFormsModule
   ],
   providers: [
@@ -26,7 +26,7 @@ import { FormHelper } from '../../../../shared/utils/helpers/form-helper';
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
-export class Login {
+export class Login implements OnInit {
 
   loginForm!: FormGroup;
   rememberMe: boolean = false;
@@ -98,7 +98,7 @@ export class Login {
             { type: 'danger', icon: 'dash-circle' }
           );
         }
-      })
+      });
     }
   }
 
