@@ -42,10 +42,11 @@ jobs:
         run: |
           echo "$SITEGROUND_SSH_KEY" > private_key
           chmod 600 private_key
-          
-          rsync -avz --delete --dry-run \
-          -e "ssh -i private_key -o StrictHostKeyChecking=no -p $SITEGROUND_PORT"  \
-          dist/CV-Project/browser $SITEGROUND_USER@$SITEGROUND_HOST:$SITEGROUND_PATH
+
+          ssh -i private_key -o StrictHostKeyChecking=no -p $SITEGROUND_PORT \
+          $SITEGROUND_USER@$SITEGROUND_HOST "
+            ls -la $SITEGROUND_PATH
+          "
 
         env:
           SITEGROUND_SSH_KEY: ${{ secrets.SITEGROUND_SSH_KEY }}
