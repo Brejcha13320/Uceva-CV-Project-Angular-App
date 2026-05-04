@@ -2,19 +2,25 @@ import { Component, inject } from '@angular/core';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../services/toast/toast.service';
 import { ToastType } from '../../../interfaces/toast.interface';
+import { Icon } from '../icon/icon';
 
 @Component({
   selector: 'app-toast',
-  imports: [NgbToastModule],
+  imports: [
+    Icon,
+    NgbToastModule,
+  ],
   template: `
   <div class="toast-container position-fixed top-0 end-0 p-3">
     @for(toast of toastService.toasts(); track toast){
       <ngb-toast
         [class]="toastClassMap[toast.type ?? 'primary']"
         [delay]="toast.delay || 3000"
-        (hidden)="toastService.remove(toast)"
-      >
-        {{ toast.text }}
+        (hidden)="toastService.remove(toast)">
+          @if(toast.icon){
+            <app-icon [icon]="toast.icon" />
+          }  
+          {{ toast.text }}
       </ngb-toast>
     }
   </div>

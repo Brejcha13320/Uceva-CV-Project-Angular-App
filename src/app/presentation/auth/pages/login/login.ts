@@ -80,20 +80,23 @@ export class Login {
       this.loginForm.markAllAsTouched();
       this.toastService.show(
         'Por favor complete el formulario', 
-        { type: 'danger' }
+        { type: 'danger', icon: 'x-circle' }
       );
     } else {
       of(true).subscribe({
         next: (d) => {
           this.toastService.show(
             'Inicio de Sesión Exitoso', 
-            { type: 'success' }
+            { type: 'success', icon: 'check-circle' }
           );
           this.rememberEmailStorage();
           this.redirectTo('/home');
         },
         error: (e) => {
-
+          this.toastService.show(
+            'Ha ocurrido un error', 
+            { type: 'danger', icon: 'dash-circle' }
+          );
         }
       })
     }
