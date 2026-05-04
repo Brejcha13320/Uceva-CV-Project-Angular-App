@@ -10,6 +10,11 @@ export const routes: Routes = [
     path: 'home', 
     loadChildren: () => import('./presentation/home/home.routes').then(m => m.HomeRoutes) 
   },
+  {
+    path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full'
+  },
   { 
     path: '**',
     redirectTo: 'auth' 

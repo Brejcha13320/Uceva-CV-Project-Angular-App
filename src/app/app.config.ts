@@ -1,6 +1,6 @@
 import { provideHttpClient } from '@angular/common/http';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withHashLocation } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { LocalStorageRepository } from './core/domain/repositories/local-storage/local-storage.repository';
 import { LocalStorageRepositoryImpl } from './core/infrastructure/repositories/local-storage/local-storage.repository.impl';
