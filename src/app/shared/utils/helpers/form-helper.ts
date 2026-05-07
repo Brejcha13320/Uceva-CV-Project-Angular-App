@@ -26,4 +26,9 @@ export class FormHelper {
     return control?.touched && control?.valid;
   }
 
+  hasError(form: FormGroup, ctrName: string, error: string){
+    const control = form.get(ctrName);
+    return control?.touched && control?.hasError(error);
+  }
+
 }

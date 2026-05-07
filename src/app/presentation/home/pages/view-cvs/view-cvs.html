@@ -1,0 +1,9 @@
+<app-title title="Ver Hojas de Vida"  />
+<app-search (onSearch)="searchCVs($event)" />
+@if(term){
+    <div class="my-2" >
+        <app-badge [text]="'Buscando: ' + term" type="primary"  />
+    </div>
+}
+
+<app-table-cv [data]="mock" (onView)="viewCV($event)" />

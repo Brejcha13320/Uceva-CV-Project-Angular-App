@@ -1,0 +1,155 @@
+<app-title title="Mi Hoja de Vida"  />
+<form [formGroup]="CVForm" >
+
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text">Nombre</span>
+            <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Escriba su nombre completo"
+                formControlName="name"
+                [ngClass]="{
+                'is-invalid': isInvalid('name'),
+                'is-valid': isValid('name')
+              }"
+            >
+        </div>
+        <div>
+            <small *ngIf="isInvalid('name')" class="text-danger">
+                El nombre es obligatorio
+            </small>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text">Profesión</span>
+            <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Escriba su profesión"
+                formControlName="profession"
+                [ngClass]="{
+                'is-invalid': isInvalid('profession'),
+                'is-valid': isValid('profession')
+              }"
+            >
+        </div>
+        <div>
+            <small *ngIf="isInvalid('profession')" class="text-danger">
+                La profesión es obligatoria
+            </small>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text">Email</span>
+            <input 
+                type="email" 
+                class="form-control" 
+                placeholder="Escriba su email"
+                formControlName="email"
+                [ngClass]="{
+                'is-invalid': isInvalid('email'),
+                'is-valid': isValid('email')
+              }"
+            >
+        </div>
+        <div>
+            <small *ngIf="hasError('email', 'required')" class="text-danger">
+                El email es obligatorio
+            </small>
+            <small *ngIf="hasError('email', 'email')" class="text-danger">
+                Debe escribir un email
+            </small>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text">Teléfono</span>
+            <input 
+                type="number" 
+                class="form-control" 
+                placeholder="Escriba su teléfono"
+                formControlName="phone"
+                [ngClass]="{
+                'is-invalid': isInvalid('phone'),
+                'is-valid': isValid('phone')
+              }"
+            >
+        </div>
+        <div>
+            <small *ngIf="isInvalid('phone')" class="text-danger">
+                El teléfono es obligatorio
+            </small>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text">Ciudad</span>
+            <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Escriba su ciudad"
+                formControlName="city"
+                [ngClass]="{
+                'is-invalid': isInvalid('city'),
+                'is-valid': isValid('city')
+              }"
+            >
+        </div>
+        <div>
+            <small *ngIf="isInvalid('city')" class="text-danger">
+                La ciudad es obligatoria
+            </small>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text">Perfil Profesional</span>
+            <textarea 
+                type="text" 
+                class="form-control" 
+                placeholder="Escriba su perfil profesional"
+                formControlName="profile"
+                [ngClass]="{
+                'is-invalid': isInvalid('profile'),
+                'is-valid': isValid('profile')
+              }"
+            ></textarea>
+        </div>
+        <div>
+            <small *ngIf="isInvalid('profile')" class="text-danger">
+                El perfil profesional es obligatorio
+            </small>
+        </div>
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">LinkedIn</span>
+        <input 
+            type="text" 
+            class="form-control"
+            formControlName="linkedin"
+            placeholder="Enlace de LinkedIn">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">GitHub</span>
+        <input 
+            type="text" 
+            class="form-control" 
+            formControlName="github"
+            placeholder="Enlace de GitHub">
+    </div>
+
+    <div class="d-flex justify-content-end" >
+        <app-button [disabled]="!CVForm.dirty" text="Actualizar Información" type="success" (onClick)="update()" />
+    </div>
+
+</form>
