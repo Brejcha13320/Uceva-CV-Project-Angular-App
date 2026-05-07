@@ -17,8 +17,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class Sidebar {
 
   options = [
-    { icon: 'clipboard-check', name: 'Opcion 1', url: '/home/my-cv' },
-    { icon: 'clipboard-data', name: 'Opción 2', url: '/home/view-cvs' },
+    { icon: 'clipboard-check', name: 'Mi Hoja de Vida', url: '/home/my-cv' },
+    { icon: 'clipboard-data', name: 'Ver Hojas de Vida', url: '/home/view-cvs' },
   ];
 
 }
