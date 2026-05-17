@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Navbar } from './components/navbar/navbar';
 import { Sidebar } from './components/sidebar/sidebar';
 import { Dashboard } from './pages/dashboard/dashboard';
@@ -10,5 +10,4 @@ import { Dashboard } from './pages/dashboard/dashboard';
   styleUrl: './home.scss'
 })
 export class Home {
-
 }

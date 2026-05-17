@@ -37,6 +37,24 @@
                 </small>
             </div>  
             <div class="form-floating mb-3">
+                <select 
+                    class="form-select" 
+                    formControlName="role"
+                    [ngClass]="{
+                        'is-invalid': isInvalid('role'),
+                        'is-valid': isValid('role')
+                    }">
+                    <option value="" selected>Seleccione el Rol</option>
+                    @for(userRole of userRoles; track userRole){
+                        <option [value]="userRole">{{ userRole | titlecase }}</option>
+                    }
+                </select>
+                <label for="registerName">Rol</label>
+                <small *ngIf="isInvalid('role')" class="text-danger">
+                    El rol es obligatorio
+                </small>
+            </div>  
+            <div class="form-floating mb-3">
                 <input 
                 type="password" 
                 class="form-control" 
@@ -50,7 +68,7 @@
                 >
                 <label for="registerPassword">Contraseña</label>
                 <small *ngIf="isInvalid('password')" class="text-danger">
-                La contraseña es obligatoria
+                    La contraseña es obligatoria
                 </small>
             </div>
             <div class="form-floating mb-3">

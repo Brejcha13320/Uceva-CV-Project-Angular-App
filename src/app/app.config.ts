@@ -1,9 +1,10 @@
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { LocalStorageRepository } from './core/domain/repositories/local-storage/local-storage.repository';
-import { LocalStorageRepositoryImpl } from './core/infrastructure/repositories/local-storage/local-storage.repository.impl';
+import { UserRepository } from './core/domain/repositories/user.repository';
+import { UserRepositoryImpl } from './core/infrastructure/repositories/user.repository.impl';
+import { httpInterceptor } from './core/infrastructure/interceptors/http.interceptor';
 
 /**
  * Configuración principal de la aplicación Angular.
@@ -32,7 +33,7 @@ export const appConfig: ApplicationConfig = {
    */
   providers: [
 
-    { provide: LocalStorageRepository, useClass: LocalStorageRepositoryImpl },
+    { provide: UserRepository, useClass: UserRepositoryImpl },
 
     /**
      * Proveedor de listeners globales de errores del navegador.
@@ -64,6 +65,6 @@ export const appConfig: ApplicationConfig = {
      */
     provideRouter(routes),
 
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([ httpInterceptor ])),
   ]
 };

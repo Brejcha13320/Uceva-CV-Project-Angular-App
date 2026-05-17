@@ -1,7 +1,11 @@
 <nav class="navbar navbar-dark bg-dark px-3">
     <span class="navbar-brand">Uceva CV Project</span>
     <div class="d-flex gap-3 align-items-center" >
-        <app-badge text="Bienvenido: Jesus David Mejia" />
-        <app-button text="Cerrar Sesión" type="success" ></app-button>
+        @if(user){
+            <app-badge [text]="'Bienvenido: ' + user.name" />
+            <app-badge [text]="user.email" type="secondary" />
+            <app-badge [text]="user.role | titlecase" type="warning" />
+        }
+        <app-button text="Cerrar Sesión" type="danger" (onClick)="logout()" ></app-button>
     </div>
 </nav>

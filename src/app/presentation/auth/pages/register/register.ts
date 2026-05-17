@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { RegisterUserUseCase } from '../../../../core/application/usecases/register-user.usecase';
+import { CreateUserData, UserRole } from '../../../../core/domain/models/user.model';
 import { Button } from '../../../../shared/components/button/button';
 import { ToastService } from '../../../../shared/services/toast/toast.service';
 import { FormHelper } from '../../../../shared/utils/helpers/form-helper';
@@ -11,10 +12,14 @@ import { RegisterValidators } from '../../../../shared/utils/validators/register
 @Component({
   selector: 'app-register',
   imports: [
+    CommonModule,
     Button,
     FormsModule,
     CommonModule,
     ReactiveFormsModule
+  ],
+  providers: [
+    RegisterUserUseCase
   ],
   templateUrl: './register.html',
   styleUrl: './register.scss',
@@ -22,25 +27,11 @@ import { RegisterValidators } from '../../../../shared/utils/validators/register
 export class Register implements OnInit {
 
   registerForm!: FormGroup;
-
-  get email(){
-    return this.registerForm.value.email;
-  }
-
-  get name(){
-    return this.registerForm.value.name;
-  }
-
-  get password() {
-    return this.registerForm.value.password;
-  }
-
-  get confirmPassword() {
-    return this.registerForm.value.confirmPassword;
-  }
+  userRoles: UserRole[] = ['ESTUDIANTE', 'DOCENTE'];
 
   private readonly formHelper = inject(FormHelper);
   private readonly toastService = inject(ToastService);
+  private readonly registerUserUseCase = inject(RegisterUserUseCase);
 
   constructor(
     private router: Router,
@@ -56,6 +47,7 @@ export class Register implements OnInit {
       {
         email: ['', [Validators.required, Validators.email]],
         name: ['', Validators.required],
+        role: ['', Validators.required],
         password: ['', Validators.required],
         confirmPassword: ['', Validators.required],
       },
@@ -83,8 +75,10 @@ export class Register implements OnInit {
         { type: 'danger', icon: 'x-circle' }
       );
     } else {
-      of(true).subscribe({
-        next: (d) => {
+      const { confirmPassword, ...restForm } = this.registerForm.value;
+      const createUserData: CreateUserData = restForm;
+      this.registerUserUseCase.execute(createUserData).subscribe({
+        next: () => {
           this.toastService.show(
             'Registro Exitoso', 
             { type: 'success', icon: 'check-circle' }

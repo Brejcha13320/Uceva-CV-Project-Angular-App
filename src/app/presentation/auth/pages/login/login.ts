@@ -2,13 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
-import { GetLocalStorageUseCase } from '../../../../core/application/usecases/local-storage/get-local-storage.usecase';
-import { RemoveLocalStorageUseCase } from '../../../../core/application/usecases/local-storage/remove-local-storage.usecase';
-import { SetLocalStorageUseCase } from '../../../../core/application/usecases/local-storage/set-local-storage.usecase';
+import { LoginUserUseCase } from '../../../../core/application/usecases/login-user.usecase';
 import { Button } from '../../../../shared/components/button/button';
+import { LocalStorageService } from '../../../../shared/services/local-storage/local-storage.service';
 import { ToastService } from '../../../../shared/services/toast/toast.service';
 import { FormHelper } from '../../../../shared/utils/helpers/form-helper';
+import { AuthService } from '../../../../shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -19,9 +18,7 @@ import { FormHelper } from '../../../../shared/utils/helpers/form-helper';
     ReactiveFormsModule
   ],
   providers: [
-    GetLocalStorageUseCase,
-    SetLocalStorageUseCase,
-    RemoveLocalStorageUseCase,
+    LoginUserUseCase
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss',
@@ -36,22 +33,17 @@ export class Login implements OnInit {
     return this.loginForm.value.email;
   }
 
-  get password(){
-    return this.loginForm.value.password;
-  }
-
+  private readonly router = inject(Router);
+  private readonly formBuilder = inject(FormBuilder);
   private readonly formHelper = inject(FormHelper);
   private readonly toastService = inject(ToastService);
-  private readonly getLocalStorageUseCase = inject(GetLocalStorageUseCase);
-  private readonly setLocalStorageUseCase = inject(SetLocalStorageUseCase);
-  private readonly removeLocalStorageUseCase = inject(RemoveLocalStorageUseCase);
+  private readonly localStorageService = inject(LocalStorageService);
+  private readonly authService = inject(AuthService);
+  private readonly loginUserUseCase = inject(LoginUserUseCase);
 
-  constructor(
-    private router: Router,
-    private formBuilder: FormBuilder,
-  ){
-    if(this.getLocalStorageUseCase.execute('email')){
-      this.localStorageEmail = this.getLocalStorageUseCase.execute('email')!;
+  constructor(){
+    if(this.localStorageService.get('email')){
+      this.localStorageEmail = this.localStorageService.get('email')!;
       this.rememberMe = true;
     }
   }
@@ -83,14 +75,14 @@ export class Login implements OnInit {
         { type: 'danger', icon: 'x-circle' }
       );
     } else {
-      of(true).subscribe({
-        next: (d) => {
+      this.loginUserUseCase.execute(this.loginForm.value).subscribe({
+        next: (loginUser) => {
           this.toastService.show(
             'Inicio de Sesión Exitoso', 
             { type: 'success', icon: 'check-circle' }
           );
           this.rememberEmailStorage();
-          this.redirectTo('/home');
+          this.authService.login(loginUser);
         },
         error: (e) => {
           this.toastService.show(
@@ -104,15 +96,14 @@ export class Login implements OnInit {
 
   rememberEmailStorage() {
     if (this.rememberMe) {
-      this.setLocalStorageUseCase.execute('email', this.email);
+      this.localStorageService.set('email', this.email);
     } else {
-      this.removeLocalStorageUseCase.execute('email');
+      this.localStorageService.remove('email');
     }
   }
 
   redirectTo(url: string){
     this.router.navigateByUrl(url);
   }
-
 
 }
