@@ -1,0 +1,27 @@
+<table class="table table-striped mt-5">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Nombre</th>
+			<th scope="col">Email</th>
+			<th scope="col">Rol</th>
+			<th scope="col">Opciones</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for (item of data; track item.name; let i = $index) {
+			<tr>
+				<th scope="row">{{ i + 1 }}</th>
+				<td>{{ item.name }}</td>
+				<td>{{ item.email }}</td>
+				<td>
+					<app-role-badge [userRole]="item.role" ></app-role-badge>
+				</td>
+				<th class="d-flex gap-2" >
+					<app-button icon="eye" (onClick)="clickOptions(item.id, 'view')" />
+					<app-button icon="pencil" (onClick)="clickOptions(item.id, 'edit')" />
+				</th>
+			</tr>
+		}
+	</tbody>
+</table>

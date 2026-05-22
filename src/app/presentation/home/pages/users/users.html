@@ -1,0 +1,9 @@
+<app-title title="Ver Usuarios"  />
+<app-search placeholder="Buscar usuarios" (onSearch)="searchCVs($event)" />
+@if(term){
+    <div class="my-2" >
+        <app-badge [text]="'Buscando: ' + term" type="primary"  />
+    </div>
+}
+
+<app-table-users [data]="users" (onClick)="clickOptions($event)" />

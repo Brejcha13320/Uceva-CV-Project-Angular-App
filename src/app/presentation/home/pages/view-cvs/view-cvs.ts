@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CV } from '../../../../core/domain/models/cv.model';
 import { Badge } from '../../../../shared/components/badge/badge';
 import { Title } from '../../../../shared/components/title/title';
 import { Search } from '../../components/search/search';
-import { CV } from '../../../../core/domain/models/cv.model';
 import { TableCv } from '../../components/table-cv/table-cv';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-cvs',

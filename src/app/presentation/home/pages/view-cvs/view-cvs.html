@@ -1,5 +1,5 @@
 <app-title title="Ver Hojas de Vida"  />
-<app-search (onSearch)="searchCVs($event)" />
+<app-search placeholder="Buscar hojas de vida" (onSearch)="searchCVs($event)" />
 @if(term){
     <div class="my-2" >
         <app-badge [text]="'Buscando: ' + term" type="primary"  />

@@ -1,0 +1,83 @@
+@switch(status){
+
+  @case("loading"){
+    <app-title title="Detalle del Usuario" />
+    <div class="container py-5">
+      <div class="d-flex align-items-center gap-4 mb-5 placeholder-glow">
+        <div class="placeholder rounded-circle shrink-0" style="width: 90px; height: 90px;"></div>
+        <div class="w-50 d-flex flex-column">
+          <div class="placeholder col-8 mb-3 rounded" style="height: 32px;"></div>
+          <div class="placeholder col-3 rounded-pill" style="height: 28px;"></div>
+        </div>
+      </div>
+      <div class="row gy-4 placeholder-glow">
+        <div class="col-12">
+          <div class="border-bottom pb-2 mb-2 text-muted small">ID DEL USUARIO</div>
+          <div class="placeholder col-12 rounded" style="height: 24px;"></div>
+        </div>
+        <div class="col-md-6">
+          <div class="border-bottom pb-2 mb-2 text-muted small">CORREO ELECTRÓNICO</div>
+          <div class="placeholder col-10 rounded" style="height: 24px;"></div>
+        </div>
+        <div class="col-md-6">
+          <div class="border-bottom pb-2 mb-2 text-muted small">ROL</div>
+          <div class="placeholder col-4 rounded-pill" style="height: 24px;"></div>
+        </div>
+      </div>
+      <div class="d-flex gap-3 mt-5 placeholder-glow">
+        <div class="placeholder col-3 rounded" style="height: 42px;"></div>
+      </div>
+    </div>
+  }
+
+  @case("success"){
+    @if(user){
+      <app-title title="Detalle del Usuario" />
+      <div class="container py-5">
+        <div class="d-flex align-items-center gap-4 mb-5">
+          <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
+            style="width: 90px; height: 90px; font-size: 2rem;">
+            {{ user.name.charAt(0) }}
+          </div>
+          <div>
+            <h1 class="h2 mb-1">{{ user.name }}</h1>
+            <app-role-badge [userRole]="user.role" />
+          </div>
+        </div>
+        <div class="row gy-4">
+          <div class="col-12">
+            <div class="border-bottom pb-2 mb-2 text-muted small">ID DEL USUARIO</div>
+            <div class="fs-5">{{ user.id }}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="border-bottom pb-2 mb-2 text-muted small">CORREO ELECTRÓNICO</div>
+            <div class="fs-5">{{ user.email }}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="border-bottom pb-2 mb-2 text-muted small">ROL</div>
+            <div class="fs-5">
+              <app-role-badge [userRole]="user.role" />
+            </div>
+          </div>
+        </div>
+        <div class="d-flex gap-3 mt-5">
+          <app-button text="Volver al Listado" (onClick)="goToUsersList()" />
+        </div>
+      </div>
+    }
+  }
+
+  @case("error"){
+    <div class="container py-5">
+      <div class="text-center">
+        <div class="display-1 text-secondary mb-3">
+          <i class="bi bi-person-x"></i>
+        </div>
+        <h1 class="fw-bold mb-3">Usuario no encontrado</h1>
+        <p class="text-muted fs-5 mb-4">El usuario que estás buscando no existe o fue eliminado.</p>
+        <app-button text="Volver al Listado" (onClick)="goToUsersList()" />
+      </div>
+    </div>
+  }
+
+}

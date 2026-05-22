@@ -34,7 +34,13 @@ jobs:
 
       # 🏗️ Build del proyecto Angular
       - name: Build Angular
-        run: npm run build
+        run: |
+          environment=$(echo $ENVIRONMENTS | base64 --decode)
+          echo "$environment" > .env
+          npm run build
+          ls -l
+          cd src
+          ls -l
         # 🔥 ESTE es el paso crítico:
         # si falla → el PR queda bloqueado
 
@@ -53,3 +59,4 @@ jobs:
           SITEGROUND_USER: ${{ secrets.SITEGROUND_USER }}
           SITEGROUND_PORT: ${{ secrets.SITEGROUND_PORT }}
           SITEGROUND_PATH: ${{ secrets.SITEGROUND_DEV_PATH }}
+          ENVIRONMENTS: ${{ secrets.ENVIRONMENTS }}

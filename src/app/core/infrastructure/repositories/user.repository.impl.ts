@@ -20,5 +20,13 @@ export class UserRepositoryImpl extends UserRepository {
     validate(token: string): Observable<ValidateAuth> {
         return this.httpClient.post<ValidateAuth>('/auth/validate', { token });
     }
+
+    getAll(): Observable<User[]> {
+        return this.httpClient.get<User[]>('/user');
+    }
+
+    getById(idUser: string): Observable<User> {
+        return this.httpClient.get<User>(`/user/${idUser}`);
+    }
     
 }

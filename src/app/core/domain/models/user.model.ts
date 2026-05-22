@@ -1,5 +1,11 @@
 export type UserRole = "ESTUDIANTE" | "DOCENTE" | "ADMIN";
 
+export enum UserRoleEnum {
+  ESTUDIANTE = "ESTUDIANTE",
+  DOCENTE = "DOCENTE",
+  ADMIN = "ADMIN",
+}
+
 export type CreateUserData = Omit<User, "id">;
 
 export interface LoginUserData {
@@ -11,7 +17,7 @@ export interface User {
     id: string;
     name: string;
     email: string;
-    role: string;
+    role: UserRole;
 }
 
 export interface LoginUser {
