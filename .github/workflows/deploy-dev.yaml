@@ -35,7 +35,7 @@ jobs:
       # 🏗️ Build del proyecto Angular
       - name: Build Angular
         run: |
-          environment=$(echo $ENVIRONMENTS | base64 --decode)
+          environment=$(echo "${{ secrets.ENVIRONMENTS }}" | base64 --decode)
           echo "$environment" > .env
           npm run build
           ls -l
@@ -59,4 +59,3 @@ jobs:
           SITEGROUND_USER: ${{ secrets.SITEGROUND_USER }}
           SITEGROUND_PORT: ${{ secrets.SITEGROUND_PORT }}
           SITEGROUND_PATH: ${{ secrets.SITEGROUND_DEV_PATH }}
-          ENVIRONMENTS: ${{ secrets.ENVIRONMENTS }}
